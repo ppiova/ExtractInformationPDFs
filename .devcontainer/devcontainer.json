@@ -4,7 +4,7 @@
   "features": {
     "ghcr.io/devcontainers/features/azure-cli:1": {}
   },
-  "postCreateCommand": "pip install --upgrade pip && (pip install -r app/requirements.txt || echo \"No requirements.txt found\") && pip install pytest",
+  "postCreateCommand": "pip install --upgrade pip && pip install -r app/requirements.txt && pip install pytest && ([ ! -f .env ] && cp app/.env.example .env && echo 'Archivo .env creado desde .env.example. Por favor, completa los valores de configuración de Azure.' || echo '.env ya existe.')",
   "customizations": {
     "vscode": {
       "settings": {
@@ -12,11 +12,15 @@
         "python.testing.pytestEnabled": true,
         "python.testing.pytestArgs": [
           "tests"
-        ]
+        ],
+        "python.linting.enabled": true,
+        "python.linting.pylintEnabled": false,
+        "python.formatting.provider": "none"
       },
       "extensions": [
         "ms-python.python",
-        "ms-python.vscode-pylance"
+        "ms-python.vscode-pylance",
+        "ms-azuretools.vscode-azureresourcegroups"
       ]
     }
   },
